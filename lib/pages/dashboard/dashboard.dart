@@ -1,6 +1,8 @@
 import 'package:Food/blocs/dashboard/dashboard_bloc.dart';
 import 'package:Food/blocs/dashboard/dashboard_event.dart';
 import 'package:Food/blocs/dashboard/dashboard_state.dart';
+import 'package:Food/blocs/home/home_bloc.dart';
+import 'package:Food/blocs/home/home_event.dart';
 import 'package:Food/pages/dashboard/category.dart';
 import 'package:Food/pages/dashboard/favourite.dart';
 import 'package:Food/theme/ui_helper.dart';
@@ -20,6 +22,15 @@ class DashboardPageScreen extends StatefulWidget {
 }
 
 class _DashboardPageScreenState extends State<DashboardPageScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      context.read<HomeBloc>().add(GetRandomMeal());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;

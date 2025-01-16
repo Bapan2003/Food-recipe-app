@@ -1,4 +1,5 @@
 import 'package:Food/blocs/dashboard/dashboard_bloc.dart';
+import 'package:Food/blocs/home/home_bloc.dart';
 import 'package:Food/pages/dashboard/dashboard.dart';
 import 'package:Food/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context)=>DashboardBloc()),
+          BlocProvider(create: (context)=>HomeBloc()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
