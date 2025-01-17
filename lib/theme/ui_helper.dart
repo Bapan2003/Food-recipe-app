@@ -1,5 +1,8 @@
 //  Box Decoration
+import 'package:Food/theme/color.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 BoxDecoration kCustomBoxDecorationWithShadow(
     double radius, Color bgColor, Color borderColor, Color shadowColor) {
@@ -31,4 +34,17 @@ SizedBox heightBox(double height){
 }
 SizedBox widthBox(double width){
   return SizedBox(height: width,);
+}
+
+Widget shimmerEffect({double? height, double? width, double radius = 12, EdgeInsetsGeometry? margin}){
+  return  Shimmer.fromColors(
+    baseColor: lightGreyColor,
+    highlightColor: whiteColor,
+      child: Container(
+        height: height,
+        width: width,
+        margin: margin,
+        decoration: kCustomBoxDecoration(radius, whiteColor, whiteColor),
+      ),
+    );
 }

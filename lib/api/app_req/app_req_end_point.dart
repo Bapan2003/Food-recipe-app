@@ -7,4 +7,11 @@ class AppReqEndPoint{
   }
 
 
+  static String getPopularMeal(){
+    return '${AppEnv.instance.baseUrl}/filter.php?a=Indian';
+  }
+
+  static String getCategoryMeal(){
+    return '${AppEnv.instance.baseUrl}/categories.php';
+  }
 }

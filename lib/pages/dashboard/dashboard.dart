@@ -27,27 +27,34 @@ class _DashboardPageScreenState extends State<DashboardPageScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
-      context.read<HomeBloc>().add(GetRandomMeal());
+      _getData();
+      context.read<HomeBloc>().add(GetPopularMealList());
+      context.read<HomeBloc>().add(GetMealCategory());
     });
+  }
+
+
+  void _getData(){
+    context.read<HomeBloc>().add(GetRandomMeal());
   }
 
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;
-    // for app orientation
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
         statusBarColor: greyColor,
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
       ),
-      child: Scaffold(
-        body: BlocBuilder<DashboardBloc,DashboardState>(builder: (context,state){
-          return _selectedWidget(state.selectedTabIndex);
-        }),
-        bottomNavigationBar: _buildMyNavBar(context,size),
+      child: RefreshIndicator(
+        onRefresh: () async{ _getData(); },
+        child: Scaffold(
+          body: BlocBuilder<DashboardBloc,DashboardState>(builder: (context,state){
+            return _selectedWidget(state.selectedTabIndex);
+          }),
+          bottomNavigationBar: _buildMyNavBar(context,size),
+        ),
       ),
     );
   }

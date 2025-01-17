@@ -10,3 +10,17 @@ class GetRandomMeal extends HomeEvent{
   List<Object?> get props =>[];
 
 }
+
+class GetPopularMealList extends HomeEvent{
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[];
+
+}
+
+class GetMealCategory extends HomeEvent{
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[];
+
+}
