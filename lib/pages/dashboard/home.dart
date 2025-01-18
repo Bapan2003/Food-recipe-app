@@ -17,104 +17,120 @@ class HomePageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;
-    return SafeArea(
-        child: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: whiteColor,
+      body: SafeArea(
           child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                    heightBox(10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0,),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('Home',style: kTextStyleColor600(blackColor, 40, true,cairo: true),),
-                          Icon(Icons.search,size: 30,)
-                        ],
-                      ),
-                    ),
-                    _titleSection('Would you like to eat'),
-                    heightBox(5),
-                    BlocBuilder<HomeBloc,HomeState>(builder: (context,state){
-                      if(state.randomMealStatus==ResponseStatus.loading){
-                        return  shimmerEffect(
-                          height: size.height*0.30,
-                          width: size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                        );
-                      }else if(state.randomMealStatus==ResponseStatus.failure){
-                        return Text(state.mealCategoryError);
-                      }else{
-                        return _bannerImage(size, state.mealsModelClass!.strMealThumb??'');
-                      }
-
-                    }),
-                    heightBox(20),
-                    _titleSection('Popular Meal'),
-                    heightBox(5),
-                    SizedBox(
-                      height: size.height*0.15,
-                      child: BlocBuilder<HomeBloc,HomeState>(
-                          buildWhen: (old,current)=>old.popularMealList!=current.popularMealList,
-                          builder: (context,state){
-                        if(state.popularMealStatus==ResponseStatus.loading){
-                          return ListView.builder(
-                              itemCount: 5,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context,index){
-                                return shimmerEffect(
-                                  height: size.height*0.15,
-                                  width: size.width*0.5,
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                );
-                              });
-                        }else if(state.popularMealStatus==ResponseStatus.failure){
-                          return Text(state.mealCategoryError);
-                        }else{
-                          return _popularMeal(size,state.popularMealList!);
-                        }
-
-                      }),
-                    ),
-
-                    heightBox(20),
-                    _titleSection('Category'),
-                    heightBox(5),
-                    BlocBuilder<HomeBloc,HomeState>(
-                        buildWhen: (old,current)=>old.mealCategoryList!=current.mealCategoryList,
-                        builder: (context,state){
-                      if(state.mealCategoryStatus==ResponseStatus.loading){
-                          return GridView.count(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 5, // Space between columns
-                          mainAxisSpacing: 5,
-                          childAspectRatio: 1.27,// Space between rows
-                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                          shrinkWrap: true,
-                          primary: false,
-                          children: List.generate(10, (index){
-                            return shimmerEffect();
-                          }),
-
-                        );
-                        }else if(state.mealCategoryStatus==ResponseStatus.failure){
-                          return Text(state.mealCategoryError);
-                        }else{
-                          return state.mealCategoryList!=null?_mealCategory(size,state.mealCategoryList!):const SizedBox.shrink();
-                        }
-
-                      }),
-                ],
+            children: [
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 20.0,vertical: 10),
+                padding: EdgeInsets.all(5),
+                decoration: kCustomBoxDecoration(12, whiteColor, Colors.black12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image(image: AssetImage('assets/images/Foodie.png'),width: 40,height:40,),
+                    Expanded(
+                        child: Text('Search by name...',style: kTextStyleColor600(greyColor, 15, false),)),
+                    Icon(Icons.search,size: 35,color: blackColor.withOpacity(0.5),),
+                  ],
+                ),
               ),
-        ));
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _titleSection('Would you like to eat'),
+                      heightBox(5),
+                      BlocBuilder<HomeBloc,HomeState>(builder: (context,state){
+                        if(state.randomMealStatus==ResponseStatus.loading){
+                          return  shimmerEffect(
+                            height: size.height*0.30,
+                            width: size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 20),
+                          );
+                        }else if(state.randomMealStatus==ResponseStatus.failure){
+                          return Text(state.mealCategoryError);
+                        }else{
+                          return _bannerImage(size, state.mealsModelClass!.strMealThumb??'');
+                        }
+
+                      }),
+                      heightBox(20),
+                      _titleSection('Popular Meal'),
+                      heightBox(5),
+                      SizedBox(
+                        height: size.height*0.15,
+                        child: BlocBuilder<HomeBloc,HomeState>(
+                            buildWhen: (old,current)=>old.popularMealList!=current.popularMealList,
+                            builder: (context,state){
+                              if(state.popularMealStatus==ResponseStatus.loading){
+                                return ListView.builder(
+                                    itemCount: 5,
+                                    scrollDirection: Axis.horizontal,
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                    itemBuilder: (context,index){
+                                      return shimmerEffect(
+                                        height: size.height*0.15,
+                                        width: size.width*0.5,
+                                        margin: EdgeInsets.symmetric(horizontal: 5),
+                                      );
+                                    });
+                              }else if(state.popularMealStatus==ResponseStatus.failure){
+                                return Text(state.mealCategoryError);
+                              }else{
+                                return _popularMeal(size,state.popularMealList!);
+                              }
+
+                            }),
+                      ),
+
+                      heightBox(20),
+                      _titleSection('Category'),
+                      heightBox(5),
+                      BlocBuilder<HomeBloc,HomeState>(
+                          buildWhen: (old,current)=>old.mealCategoryList!=current.mealCategoryList,
+                          builder: (context,state){
+                            if(state.mealCategoryStatus==ResponseStatus.loading){
+                              return GridView.count(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 5, // Space between columns
+                                mainAxisSpacing: 5,
+                                childAspectRatio: 1.27,// Space between rows
+                                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                                shrinkWrap: true,
+                                primary: false,
+                                children: List.generate(10, (index){
+                                  return shimmerEffect();
+                                }),
+
+                              );
+                            }else if(state.mealCategoryStatus==ResponseStatus.failure){
+                              return Text(state.mealCategoryError);
+                            }else{
+                              return state.mealCategoryList!=null?mealCategory(context,size,state.mealCategoryList!):const SizedBox.shrink();
+                            }
+
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )),
+    );
   }
 
   Widget _titleSection(String title){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Text(title,style: kTextStyleColor500(blackColor, 25, true,),),
+      child: Text(title,style: kTextStyleColor500(blackColor, 20, true,),),
     );
   }
 
@@ -170,41 +186,5 @@ class HomePageScreen extends StatelessWidget {
     );
   }
   
-  
-  Widget _mealCategory(Size size,List<MealCategoryModel> mealList){
-    return GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 5, // Space between columns
-        mainAxisSpacing: 5,
-        childAspectRatio: 1.27,// Space between rows
-        padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-        shrinkWrap: true,
-        primary: false,
-        children: List.generate(mealList.length, (index){
-          return _mealCategoryItem(size,mealList[index]);
-        }),
 
-    );
-  }
-
-  Widget _mealCategoryItem(Size size,MealCategoryModel item){
-    return Container(
-      decoration: kCustomBoxDecorationWithShadow(12, orangeGreyColor, orangeGreyColor,blackColor),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CachedNetworkImage(
-              imageUrl: item.strCategoryThumb??'',
-              width: double.infinity,
-              fit: BoxFit.cover,
-              errorWidget: (context,error,imgUrl){
-                return Icon(Icons.error);
-              },
-          ),
-          Expanded(child: Text(item.strCategory??'',style: kTextStyleColor800(blackColor, 20, false),maxLines: null,))
-        ],
-      ),
-    );
-  }
 }

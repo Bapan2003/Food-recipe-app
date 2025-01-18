@@ -2,6 +2,7 @@ import 'package:Food/pages/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../pages/category/meals_by_category.dart';
 import '../pages/dashboard/dashboard.dart';
 
 class Routes{
@@ -11,6 +12,8 @@ class Routes{
         return getPageTransition(const SplashScreen(), setting);
       case DashboardPageScreen.rootName:
         return getPageTransition(const DashboardPageScreen(), setting);
+      case MealsByCategoryPageScreen.rootName:
+        return getPageTransition(const MealsByCategoryPageScreen(), setting);
 
     }
     return null;
