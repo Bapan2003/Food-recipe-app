@@ -47,36 +47,4 @@ class _MealsByCategoryPageScreenState extends State<MealsByCategoryPageScreen> {
     );
   }
 
-  Widget appBar(BuildContext context, String title){
-    return SizedBox(
-      width: double.maxFinite,
-      height: 72,
-      // padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-      // margin: EdgeInsets.only(top: 20),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20),
-        child: Row(children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context, true);
-            },
-            child: Container(
-                height: 45,
-                width: 45,
-                decoration: kCustomBoxDecoration(12, whiteColor, greyColor.withOpacity(0.45)),
-                child: Padding(
-                  padding: const EdgeInsets.all(3),
-                  child: Image.asset('assets/images/ic_back.png'),
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(title,
-                style: kTextStyleColor600(blackColor, 25, true,
-                    cairo: true)),
-          )
-        ]),
-      ),
-    );
-  }
 }

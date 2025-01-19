@@ -3,7 +3,7 @@ import 'package:Food/blocs/home/home_state.dart';
 import 'package:Food/model/home/meal_category_model.dart';
 import 'package:Food/model/home/meal_model.dart';
 import 'package:Food/model/home/popular_meal_model.dart';
-import 'package:Food/repository/home_repo.dart';
+import 'package:Food/repository/dashboard/home_repo.dart';
 import 'package:Food/utility/enum.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';

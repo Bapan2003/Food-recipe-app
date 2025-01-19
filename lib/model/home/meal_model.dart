@@ -5,6 +5,8 @@ class MealsModelClass {
   String? strArea;
   String? strInstructions;
   String? strMealThumb;
+  String? strYoutube;
+  String? strTags;
 
   MealsModelClass(
       {this.idMeal,
@@ -13,6 +15,8 @@ class MealsModelClass {
         this.strArea,
         this.strInstructions,
         this.strMealThumb,
+        this.strYoutube,
+        this.strTags
        });
 
   MealsModelClass.fromJson(Map<String, dynamic> json) {
@@ -22,6 +26,8 @@ class MealsModelClass {
     strArea = json['strArea'];
     strInstructions = json['strInstructions'];
     strMealThumb = json['strMealThumb'];
+    strYoutube = json['strYoutube'];
+    strTags = json['strTags'];
   }
 
   Map<String, dynamic> toJson() {

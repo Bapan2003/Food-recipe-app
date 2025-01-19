@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'api/app_env/app_env.dart';
+import 'blocs/details/meal_details_bloc.dart';
 
 void main() {
   AppEnv.init(EnvironmentType.prod);
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (context)=>DashboardBloc()),
           BlocProvider(create: (context)=>HomeBloc()),
+          BlocProvider(create: (context)=>MealDetailsBloc()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

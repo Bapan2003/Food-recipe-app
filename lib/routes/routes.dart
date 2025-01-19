@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 
 import '../pages/category/meals_by_category.dart';
 import '../pages/dashboard/dashboard.dart';
+import '../pages/details/meal_details.dart';
 
 class Routes{
   static Route<dynamic>? generateRoute(RouteSettings setting) {
@@ -11,18 +12,20 @@ class Routes{
       case SplashScreen.rootName:
         return getPageTransition(const SplashScreen(), setting);
       case DashboardPageScreen.rootName:
-        return getPageTransition(const DashboardPageScreen(), setting);
+        return getPageTransition(const DashboardPageScreen(), setting,pageTransitionType: PageTransitionType.fade);
       case MealsByCategoryPageScreen.rootName:
         return getPageTransition(const MealsByCategoryPageScreen(), setting);
+      case MealDetailsPageScreen.rootName:
+        return getPageTransition(const MealDetailsPageScreen(), setting);
 
     }
     return null;
   }
 
-  static getPageTransition(dynamic screenName, RouteSettings setting) {
+  static getPageTransition(dynamic screenName, RouteSettings setting,{PageTransitionType pageTransitionType=PageTransitionType.rightToLeft}) {
     return PageTransition(
         child: screenName,
-        type: PageTransitionType.rightToLeft,
+        type: pageTransitionType,
         alignment: Alignment.center,
         settings: setting,
         duration: const Duration(milliseconds: 750),

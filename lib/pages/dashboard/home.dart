@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../theme/color.dart';
 import 'package:Food/theme/text_style.dart';
 
+import '../details/meal_details.dart';
+
 
 class HomePageScreen extends StatelessWidget {
   const HomePageScreen({super.key});
@@ -58,12 +60,12 @@ class HomePageScreen extends StatelessWidget {
                         }else if(state.randomMealStatus==ResponseStatus.failure){
                           return Text(state.mealCategoryError);
                         }else{
-                          return _bannerImage(size, state.mealsModelClass!.strMealThumb??'');
+                          return _bannerImage(context, size, state.mealsModelClass!.strMealThumb??'');
                         }
 
                       }),
                       heightBox(20),
-                      _titleSection('Popular Meal'),
+                      _titleSection('Over Popular Meals'),
                       heightBox(5),
                       SizedBox(
                         height: size.height*0.15,
@@ -134,21 +136,26 @@ class HomePageScreen extends StatelessWidget {
     );
   }
 
-  Widget _bannerImage(Size size,String imgUrl){
-    return Container(
-      decoration: kCustomBoxDecorationWithShadow(15, orangeGreyColor, orangeGreyColor, blackColor),
-      height: size.height*0.30,
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: CachedNetworkImage(
-          imageUrl: imgUrl,
-          height: size.height*0.30,
-          width: size.width,
-          fit: BoxFit.fill,
-          errorWidget: (context,error,imgUrl){
-            return Icon(Icons.error);
-          },
+  Widget _bannerImage(BuildContext context,Size size,String imgUrl){
+    return GestureDetector(
+      onTap: (){
+        Navigator.pushNamed(context,  MealDetailsPageScreen.rootName);
+      },
+      child: Container(
+        decoration: kCustomBoxDecorationWithShadow(15, orangeGreyColor, orangeGreyColor, blackColor),
+        height: size.height*0.30,
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: CachedNetworkImage(
+            imageUrl: imgUrl,
+            height: size.height*0.30,
+            width: size.width,
+            fit: BoxFit.fill,
+            errorWidget: (context,error,imgUrl){
+              return Icon(Icons.error);
+            },
+          ),
         ),
       ),
     );
@@ -160,27 +167,32 @@ class HomePageScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context,index){
-           return _popularMealImage(size,mealList[index].strMealThumb??'');
+           return _popularMealImage(context,size,mealList[index].strMealThumb??'');
     });
   }
 
 
-  Widget _popularMealImage(Size size,String imgUrl){
-    return Container(
-      decoration: kCustomBoxDecoration(15, orangeGreyColor, orangeGreyColor, ),
-      height: size.height*0.15,
-      width: size.width*0.5,
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: CachedNetworkImage(
-          imageUrl: imgUrl,
-          height: size.height*0.15,
-          width: size.width,
-          fit: BoxFit.fill,
-          errorWidget: (context,error,imgUrl){
-            return Icon(Icons.error);
-          },
+  Widget _popularMealImage(BuildContext context,Size size,String imgUrl){
+    return GestureDetector(
+      onTap: (){
+        Navigator.pushNamed(context,  MealDetailsPageScreen.rootName);
+      },
+      child: Container(
+        decoration: kCustomBoxDecoration(15, orangeGreyColor, orangeGreyColor, ),
+        height: size.height*0.15,
+        width: size.width*0.5,
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: CachedNetworkImage(
+            imageUrl: imgUrl,
+            height: size.height*0.15,
+            width: size.width,
+            fit: BoxFit.fill,
+            errorWidget: (context,error,imgUrl){
+              return Icon(Icons.error);
+            },
+          ),
         ),
       ),
     );
