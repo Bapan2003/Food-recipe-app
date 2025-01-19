@@ -60,7 +60,7 @@ class HomePageScreen extends StatelessWidget {
                         }else if(state.randomMealStatus==ResponseStatus.failure){
                           return Text(state.mealCategoryError);
                         }else{
-                          return _bannerImage(context, size, state.mealsModelClass!.strMealThumb??'');
+                          return _bannerImage(context, size, state.mealsModelClass!.strMealThumb??'',state.mealsModelClass!.idMeal??'');
                         }
 
                       }),
@@ -136,10 +136,10 @@ class HomePageScreen extends StatelessWidget {
     );
   }
 
-  Widget _bannerImage(BuildContext context,Size size,String imgUrl){
+  Widget _bannerImage(BuildContext context,Size size,String imgUrl, String id){
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context,  MealDetailsPageScreen.rootName);
+        Navigator.pushNamed(context,  MealDetailsPageScreen.rootName,arguments: id);
       },
       child: Container(
         decoration: kCustomBoxDecorationWithShadow(15, orangeGreyColor, orangeGreyColor, blackColor),
@@ -167,15 +167,15 @@ class HomePageScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context,index){
-           return _popularMealImage(context,size,mealList[index].strMealThumb??'');
+           return _popularMealImage(context,size,mealList[index].strMealThumb??'',mealList[index].idMeal??'');
     });
   }
 
 
-  Widget _popularMealImage(BuildContext context,Size size,String imgUrl){
+  Widget _popularMealImage(BuildContext context,Size size,String imgUrl,String id){
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context,  MealDetailsPageScreen.rootName);
+        Navigator.pushNamed(context,  MealDetailsPageScreen.rootName,arguments: id);
       },
       child: Container(
         decoration: kCustomBoxDecoration(15, orangeGreyColor, orangeGreyColor, ),

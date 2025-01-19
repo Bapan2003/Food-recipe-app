@@ -14,9 +14,11 @@ class Routes{
       case DashboardPageScreen.rootName:
         return getPageTransition(const DashboardPageScreen(), setting,pageTransitionType: PageTransitionType.fade);
       case MealsByCategoryPageScreen.rootName:
-        return getPageTransition(const MealsByCategoryPageScreen(), setting);
+        final args= setting.arguments as String;
+        return getPageTransition( MealsByCategoryPageScreen(strCategory: args,), setting);
       case MealDetailsPageScreen.rootName:
-        return getPageTransition(const MealDetailsPageScreen(), setting);
+        final args= setting.arguments as String;
+        return getPageTransition(MealDetailsPageScreen(id: args,), setting);
 
     }
     return null;

@@ -15,7 +15,14 @@ class AppReqEndPoint{
     return '${AppEnv.instance.baseUrl}/categories.php';
   }
 
-  static String getMealDetailsById(int id){
+  static String getMealDetailsById(String id){
     return '${AppEnv.instance.baseUrl}/lookup.php?i=$id';
   }
+
+  static String getMealListByCategory(String categoryName){
+    return '${AppEnv.instance.baseUrl}/filter.php?c=$categoryName';
+  }
+
+
+
 }

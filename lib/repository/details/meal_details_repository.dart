@@ -6,7 +6,7 @@ import '../../model/home/meal_model.dart';
 class MealDetailsRepository{
   ApiManagerBase apiManager=ApiManager();
 
-  Future<MealsModelClass> getMealDetailsById(int id) async{
+  Future<MealsModelClass> getMealDetailsById(String id) async{
     try {
       var data = await apiManager.getData(AppReqEndPoint.getMealDetailsById(id));
       return MealsModelClass.fromJson(data['meals'][0]);

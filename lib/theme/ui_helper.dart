@@ -1,5 +1,7 @@
 //  Box Decoration
+import 'package:Food/model/home/meal_model.dart';
 import 'package:Food/pages/category/meals_by_category.dart';
+import 'package:Food/pages/details/meal_details.dart';
 import 'package:Food/theme/color.dart';
 import 'package:Food/theme/text_style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -54,49 +56,52 @@ Widget shimmerEffect({double? height, double? width, double radius = 12, EdgeIns
     );
 }
 
-Widget listTileItem(BuildContext context,Size size){
-  return Container(
-    margin: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
-    height: size.height*0.15,
-    width: size.width*0.45,
-    decoration: kCustomBoxDecorationWithShadow(12, whiteColor, greyColor.withOpacity(0.25),blackColor),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12),
-              bottomLeft: Radius.circular(12)
-          ),
-          child: CachedNetworkImage(
-            imageUrl: '',
-            height: size.height*0.15,
-            width: size.width*0.45,
-            fit:BoxFit.cover,
-            errorWidget: (context,error,imgUrl){
-              return Container(
-                  height: size.height*0.15,
-                  width: size.width*0.45,
-                  color: greyColor,
-                  child: Icon(Icons.error));
-            },
-          ),
+Widget listTileItem(BuildContext context,Size size, MealsModelClass model){
+  return GestureDetector(
+    onTap: (){
+      Navigator.pushNamed(context, MealDetailsPageScreen.rootName, arguments: model.idMeal);
+    },
+    child: Container(
+      height: size.height*0.15,
+      decoration: kCustomBoxDecorationWithShadow(12, whiteColor, greyColor.withOpacity(0.25),blackColor),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                bottomLeft: Radius.circular(12)
+            ),
+            child: CachedNetworkImage(
+              imageUrl: model.strMealThumb??'',
+              height: size.height*0.15,
+              width: size.width*0.45,
+              fit:BoxFit.cover,
+              errorWidget: (context,error,imgUrl){
+                return Container(
+                    height: size.height*0.15,
+                    width: size.width*0.45,
+                    color: greyColor,
+                    child: Icon(Icons.error));
+              },
+            ),
 
-        ),
-        Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Chicken',style: kTextStyleColor800(blackColor, 18, false),maxLines: 1,overflow: TextOverflow.ellipsis,softWrap: true,),
-                  Text('datagyuerfghfjghjzfgysgfvyjgvhvhjsgvhjvdatagyuerfghfjghjzfgysgfvyjgvhvhjsgvhjvdatagyuerfghfjghjzfgysgfvyjgvhvhjsgvhjv,shjGMVShjszvgfyutFKTcuvcgf',maxLines: 4,softWrap: true,overflow: TextOverflow.ellipsis,style: kTextStyleColor600(blackColor.withOpacity(0.5), 15, false),),
-                ],
-              ),
-            ))
-      ],
+          ),
+          Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(model.strMeal??'',style: kTextStyleColor800(blackColor, 18, false),maxLines: 1,overflow: TextOverflow.ellipsis,softWrap: true,),
+                    Text(model.strInstructions??'',maxLines: 4,softWrap: true,overflow: TextOverflow.ellipsis,style: kTextStyleColor600(blackColor.withOpacity(0.5), 15, false),),
+                  ],
+                ),
+              ))
+        ],
+      ),
     ),
   );
 }
@@ -183,7 +188,7 @@ Widget mealCategory(BuildContext context,Size size,List<MealCategoryModel> mealL
 Widget mealCategoryItem(BuildContext context,Size size,MealCategoryModel item){
   return GestureDetector(
     onTap: (){
-      Navigator.pushNamed(context, MealsByCategoryPageScreen.rootName);
+      Navigator.pushNamed(context, MealsByCategoryPageScreen.rootName,arguments: item.strCategory);
     },
     child: Container(
       decoration: kCustomBoxDecorationWithShadow(12, orangeGreyColor, orangeGreyColor,blackColor),
