@@ -73,6 +73,7 @@ class _MealsByCategoryPageScreenState extends State<MealsByCategoryPageScreen> {
                             return ListView.builder(
                                 itemCount: state.mealListByCategory!.length,
                                 physics:const BouncingScrollPhysics(),
+                                padding: EdgeInsets.only(bottom: 20),
                                 itemBuilder: (context,index){
                                   return _listTileItem(context, size,state.mealListByCategory![index].strMeal??'',state.mealListByCategory![index].strMealThumb??'',state.mealListByCategory![index].idMeal??'');
                                 }

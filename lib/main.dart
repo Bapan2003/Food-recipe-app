@@ -2,6 +2,7 @@ import 'package:Food/blocs/dashboard/dashboard_bloc.dart';
 import 'package:Food/blocs/favourites/favourites_bloc.dart';
 import 'package:Food/blocs/favourites/favourites_event.dart';
 import 'package:Food/blocs/home/home_bloc.dart';
+import 'package:Food/blocs/search/search_bloc.dart';
 import 'package:Food/pages/dashboard/dashboard.dart';
 import 'package:Food/pages/splash_screen.dart';
 import 'package:Food/routes/routes.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (context)=>DashboardBloc()),
           BlocProvider(create: (context)=>HomeBloc()),
+          BlocProvider(create: (context)=>SearchBloc()),
           BlocProvider(create: (context)=>FavoritesBloc()..add(InitializeFavorites())),
         ],
         child: MaterialApp(

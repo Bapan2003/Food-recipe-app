@@ -8,10 +8,12 @@ import 'package:Food/blocs/home/home_bloc.dart';
 import 'package:Food/theme/color.dart';
 import 'package:Food/theme/text_style.dart';
 import 'package:Food/theme/ui_helper.dart';
+import 'package:Food/utility/app_helper.dart';
 import 'package:Food/utility/enum.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MealDetailsPageScreen extends StatefulWidget {
   static const String rootName='mealDetails';
@@ -111,6 +113,7 @@ class _MealDetailsPageScreenState extends State<MealDetailsPageScreen> {
                                 Text(state.mealsModelClass!.strArea??'',style: kTextStyleColor600(blackColor, 15, false),)
                               ],
                             ),
+                            if(state.mealsModelClass!.strTags!=null && state.mealsModelClass!.strTags!.isNotEmpty)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,7 +153,14 @@ class _MealDetailsPageScreenState extends State<MealDetailsPageScreen> {
         ),
         floatingActionButton: FloatingActionButton(
             onPressed: (){
-
+              MealDetailsState state= _mealDetailsBloc.state;
+              if(state.status==ResponseStatus.success){
+                try{
+                  AppHelper.openUrl(state.mealsModelClass!.strYoutube??'');
+                }catch(e){
+                  Fluttertoast.showToast(msg: state.error,backgroundColor: redColor);
+                }
+              }
            },
           backgroundColor: whiteColor,
           child: Icon(Icons.play_circle_outlined,color: redColor,size: 30,),

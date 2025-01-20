@@ -24,5 +24,8 @@ class AppReqEndPoint{
   }
 
 
+  static String getMealListBySearchKey(String searchKey){
+    return '${AppEnv.instance.baseUrl}/search.php?s=$searchKey';
+  }
 
 }

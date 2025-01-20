@@ -1,5 +1,6 @@
 import 'package:Food/blocs/favourites/favourites_bloc.dart';
 import 'package:Food/blocs/favourites/favourites_state.dart';
+import 'package:Food/pages/details/meal_details.dart';
 import 'package:Food/theme/color.dart';
 import 'package:Food/theme/ui_helper.dart';
 import 'package:flutter/material.dart';
@@ -19,23 +20,7 @@ class FavouritePageScreen extends StatelessWidget {
       body: SafeArea(
           child: Column(
             children: [
-              Container(
-                width: size.width,
-                margin: const EdgeInsets.symmetric(
-                    horizontal: 20.0,vertical: 10),
-                padding: EdgeInsets.all(5),
-                decoration: kCustomBoxDecoration(12, whiteColor, Colors.black12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image(image: AssetImage('assets/images/Foodie.png'),width: 40,height:40,),
-                    Expanded(
-                        child: Text('Search by name...',style: kTextStyleColor600(greyColor, 15, false),)),
-                    Icon(Icons.search,size: 35,color: blackColor.withOpacity(0.5),),
-                  ],
-                ),
-              ),
+              searchView(context,size),
               Expanded(
                   child: BlocBuilder<FavoritesBloc,FavouritesState>(builder: (context,state){
                     if(state.favoriteMeals!=null && state.favoriteMeals!.isNotEmpty){
@@ -57,10 +42,14 @@ class FavouritePageScreen extends StatelessWidget {
                                             label: 'Remove favorite',
                                             borderRadius: BorderRadius.circular(12),
                                             onPressed: (context){
-
+                                              context.read<FavoritesBloc>().add(RemoveFavorite(meal.idMeal??''));
                                         })
                                   ]),
-                                  child: listTileItem(context, size,meal)),
+                                  child: GestureDetector(
+                                      onTap: (){
+                                        Navigator.pushNamed(context, MealDetailsPageScreen.rootName,arguments: meal.idMeal);
+                                      },
+                                      child: listTileItem(context, size,meal))),
                             );
                           }
                       );
