@@ -52,9 +52,39 @@ class _DashboardPageScreenState extends State<DashboardPageScreen> {
         onRefresh: () async{ _getData(); },
         child: Scaffold(
           body: BlocBuilder<DashboardBloc,DashboardState>(builder: (context,state){
-            return _selectedWidget(state.selectedTabIndex);
+            return Stack(
+              children: [
+                _selectedWidget(state.selectedTabIndex),
+                Align(
+                  alignment: const Alignment(0.0, 0.95),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    elevation: 30,
+                    color: Colors.transparent,
+                    child: SizedBox(
+                        width: 350,
+                        child: _buildMyNavBar(context, size)),
+                  ),
+                ),
+
+              ],
+            );
           }),
-          bottomNavigationBar: _buildMyNavBar(context, size),
+          /*bottomNavigationBar: CurvedNavigationBar(
+            backgroundColor: whiteColor,
+            color: greyColor,
+            items: <Widget>[
+              Icon(Icons.home, size: 35,color: whiteColor,),
+              Icon(Icons.favorite, size: 35,color: whiteColor,),
+              Icon(Icons.category, size: 35,color: whiteColor,),
+            ],
+            onTap: (index) {
+              //Handle button tap
+              context.read<DashboardBloc>().add(SetTabIndex(index: index));
+
+            },
+          ),*/
         ),
       ),
     );
@@ -62,23 +92,9 @@ class _DashboardPageScreenState extends State<DashboardPageScreen> {
 
   Widget _buildMyNavBar(BuildContext context,Size size){
     return Container(
-      height: size.height * 0.095,
-      padding: EdgeInsets.symmetric(horizontal: 40),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
-          boxShadow: [
-            BoxShadow(
-              color: blackColor.withOpacity(0.1),
-              blurRadius: 12,
-              offset: const Offset(0, -10),
-            )
-          ],
-        color:greyColor,
-        border: Border.all(color: greyColor,width: 1.5)
-      ),
+      height: size.height * 0.085,
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      decoration: kCustomBoxDecorationWithShadow(40, whiteColor, whiteColor, blackColor),
       child: BlocBuilder<DashboardBloc,DashboardState>(builder: (context,state){
         final dashboardBloc=context.read<DashboardBloc>();
         return Row(
@@ -106,13 +122,13 @@ class _DashboardPageScreenState extends State<DashboardPageScreen> {
           dashboardBloc.add(SetTabIndex(index: index));
         },
         child: AnimatedContainer(
-          decoration:kCustomBoxDecoration(25, Colors.transparent, index == state.selectedTabIndex ?whiteColor:Colors.transparent) ,
+          decoration:kCustomBoxDecoration(25, index == state.selectedTabIndex ?greyColor:Colors.transparent, index == state.selectedTabIndex ?greyColor:Colors.transparent) ,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
           child: Icon(
             icon,
-            color: whiteColor,
+            color: index == state.selectedTabIndex ?whiteColor:greyColor.withOpacity(0.5),
             size: 35,
           ),
         ),

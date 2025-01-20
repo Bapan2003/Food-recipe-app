@@ -60,6 +60,7 @@ dependencies:
   url_launcher: ^6.3.1
 #for curved bottom navigation
   curved_navigation_bar: ^1.0.6
+  dot_navigation_bar: ^1.0.2
 
 
 
