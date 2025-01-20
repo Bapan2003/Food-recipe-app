@@ -6,6 +6,7 @@ import 'package:Food/blocs/home/home_event.dart';
 import 'package:Food/pages/dashboard/category.dart';
 import 'package:Food/pages/dashboard/favourite.dart';
 import 'package:Food/theme/ui_helper.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +54,7 @@ class _DashboardPageScreenState extends State<DashboardPageScreen> {
           body: BlocBuilder<DashboardBloc,DashboardState>(builder: (context,state){
             return _selectedWidget(state.selectedTabIndex);
           }),
-          bottomNavigationBar: _buildMyNavBar(context,size),
+          bottomNavigationBar: _buildMyNavBar(context, size),
         ),
       ),
     );

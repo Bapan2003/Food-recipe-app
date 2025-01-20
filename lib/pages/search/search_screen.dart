@@ -26,6 +26,7 @@ class SearchPageScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.dark,
         ),
         child: Scaffold(
+          backgroundColor: whiteColor,
           body: SafeArea(
               child: Column(
                 children: [
