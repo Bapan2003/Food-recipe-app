@@ -52,26 +52,9 @@ class _DashboardPageScreenState extends State<DashboardPageScreen> {
         onRefresh: () async{ _getData(); },
         child: Scaffold(
           body: BlocBuilder<DashboardBloc,DashboardState>(builder: (context,state){
-            return Stack(
-              children: [
-                _selectedWidget(state.selectedTabIndex),
-                Align(
-                  alignment: const Alignment(0.0, 0.95),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    elevation: 30,
-                    color: Colors.transparent,
-                    child: SizedBox(
-                        width: 350,
-                        child: _buildMyNavBar(context, size)),
-                  ),
-                ),
-
-              ],
-            );
+            return _selectedWidget(state.selectedTabIndex);
           }),
-          /*bottomNavigationBar: CurvedNavigationBar(
+          bottomNavigationBar: CurvedNavigationBar(
             backgroundColor: whiteColor,
             color: greyColor,
             items: <Widget>[
@@ -84,7 +67,7 @@ class _DashboardPageScreenState extends State<DashboardPageScreen> {
               context.read<DashboardBloc>().add(SetTabIndex(index: index));
 
             },
-          ),*/
+          ),
         ),
       ),
     );
