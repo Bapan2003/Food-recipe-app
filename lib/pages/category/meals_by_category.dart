@@ -11,6 +11,8 @@ import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 import '../../theme/ui_helper.dart';
 import '../details/meal_details.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 
 class MealsByCategoryPageScreen extends StatefulWidget {
   static const String rootName='mealsByCategory';
@@ -28,6 +30,7 @@ class _MealsByCategoryPageScreenState extends State<MealsByCategoryPageScreen> {
   void initState() {
     super.initState();
     _categoryBloc=CategoryBloc()..add(GetAllMealByCategory(strCategory: widget.strCategory));
+    setCurrentScreen("category");
 
   }
 
@@ -36,6 +39,14 @@ class _MealsByCategoryPageScreenState extends State<MealsByCategoryPageScreen> {
   void dispose() {
     super.dispose();
     _categoryBloc.close();
+  }
+
+
+  void setCurrentScreen(String screenName) {
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: screenName,
+    );
+    print("hi");
   }
 
   @override

@@ -55,7 +55,7 @@ class _DashboardPageScreenState extends State<DashboardPageScreen> {
             return _selectedWidget(state.selectedTabIndex);
           }),
           bottomNavigationBar: CurvedNavigationBar(
-            backgroundColor: whiteColor,
+            backgroundColor: Colors.transparent,
             color: greyColor,
             items: <Widget>[
               Icon(Icons.home, size: 35,color: whiteColor,),

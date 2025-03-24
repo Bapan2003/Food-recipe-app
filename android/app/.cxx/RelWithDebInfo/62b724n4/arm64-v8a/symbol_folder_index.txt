@@ -1,0 +1,1 @@
+/Users/admin/AndroidStudioProjects/Food/build/app/intermediates/cxx/RelWithDebInfo/62b724n4/obj/arm64-v8a

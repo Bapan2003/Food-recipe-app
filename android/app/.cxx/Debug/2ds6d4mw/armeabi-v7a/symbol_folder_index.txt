@@ -1,0 +1,1 @@
+/Users/admin/AndroidStudioProjects/Food/build/app/intermediates/cxx/Debug/2ds6d4mw/obj/armeabi-v7a

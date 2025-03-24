@@ -12,9 +12,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'api/app_env/app_env.dart';
 import 'blocs/details/meal_details_bloc.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   AppEnv.init(EnvironmentType.prod);
+  await Firebase.initializeApp();
+  try {
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    analytics.setAnalyticsCollectionEnabled(true);
+  } catch (e) {
+    debugPrint("Error : $e");
+  }
   runApp(const MyApp());
 }
 
@@ -36,6 +48,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
+          navigatorObservers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,

@@ -14,6 +14,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 
 class MealDetailsPageScreen extends StatefulWidget {
   static const String rootName='mealDetails';
@@ -37,6 +39,27 @@ class _MealDetailsPageScreenState extends State<MealDetailsPageScreen> {
   void dispose() {
     super.dispose();
     _mealDetailsBloc.close();
+  }
+
+
+  void logAddToFavorites(String recipeId, String recipeName) {
+    FirebaseAnalytics.instance.logEvent(
+      name: 'add_to_favorites',
+      parameters: {
+        'recipe_id': recipeId,
+        'recipe_name': recipeName,
+      },
+    );
+  }
+
+  void logRemoveToFavorites(String recipeId, String recipeName) {
+    FirebaseAnalytics.instance.logEvent(
+      name: 'remove_to_favorites',
+      parameters: {
+        'recipe_id': recipeId,
+        'recipe_name': recipeName,
+      },
+    );
   }
 
   @override
@@ -77,8 +100,11 @@ class _MealDetailsPageScreenState extends State<MealDetailsPageScreen> {
                           child: GestureDetector(
                               onTap: (){
                                 if(isFavorite){
+                                  logRemoveToFavorites(widget.id, 'Pasta Alfredo');
+
                                   context.read<FavoritesBloc>().add(RemoveFavorite(widget.id));
                                 }else{
+                                  logAddToFavorites(widget.id, 'Pasta Alfredo');
                                   context.read<FavoritesBloc>().add(AddFavorite(context.read<MealDetailsBloc>().state.mealsModelClass!));
                                 }
                               },
