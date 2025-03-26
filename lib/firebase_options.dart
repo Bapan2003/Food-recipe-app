@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'foodie-1507e.firebasestorage.app',
     iosBundleId: 'com.flutterguy.food',
   );
+
 }
