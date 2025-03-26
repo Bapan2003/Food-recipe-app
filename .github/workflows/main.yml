@@ -1,12 +1,17 @@
 name: Flutter CI/CD Pipeline
 
+#on:
+#  push:
+#    branches:
+#      - main  # Runs the workflow on push to the main branch
+#  pull_request:
+#    branches:
+#      - main  # Runs on pull requests to main
+
 on:
   push:
-    branches:
-      - main  # Runs the workflow on push to the main branch
-  pull_request:
-    branches:
-      - main  # Runs on pull requests to main
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -53,7 +58,7 @@ jobs:
         with:
           files: app-release.apk
           tag_name: ${{ github.ref_name }}  # Uses the pushed tag name
-          release_name: Release ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
           draft: false
           prerelease: false
         env:
